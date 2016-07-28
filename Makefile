@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-Wall
-INCLUDES=-Isrc/
+INCLUDES=-Iinclude/
 LIBS=-lSDL2 -lGL -lGLEW -lSOIL
 SRCS=Camera.cpp GLSLShader.cpp MainGame.cpp Errors.cpp InputManager.cpp Texture.cpp FPSLimiter.cpp main.cpp VertexBuffers.cpp
 OBJS=$(join $(addsuffix objs/, $(dir $(SRCS))), $(notdir $(SRCS:.cpp=.o)))
