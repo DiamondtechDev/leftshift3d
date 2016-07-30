@@ -58,11 +58,26 @@ void MainGame::initSystems()
 
 void MainGame::gameLoop()
 {
+	float red = 0;
+	float green = 0;
+	float blue = 0;
+	char redi = 1;
+	char greeni = 1;
+	char bluei = 1;
 	while(state_ != GameState::EXIT)
 	{
+		red = red + 0.0078125 * redi;
+		green = green + 0.03125 * greeni;
+		blue = blue + 0.015625 * bluei;
+		if(red >= 1.0) {redi = -1;}
+		if(green >= 1.0) {greeni = -1;}
+		if(blue >= 1.0) {bluei = -1;}
+		if(red <= 0.0) {redi = 1;}
+		if(green <= 0.0) {greeni = 1;}
+		if(blue <= 0.0) {bluei = 1;}
 		fpsLimiter_.begin();
 		handleEvents();
-		glClearColor(0.0,0.5,1.0,0.0);
+		glClearColor(red,green,blue,0.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		renderGame();
