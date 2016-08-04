@@ -21,7 +21,7 @@ void MainGame::run()
 void MainGame::initSystems()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-		fatalError("SDL2 missing!\nPlease install SDL2 to run this application.");
+		fatalError(SDL_GetError());
 
 	window_ = SDL_CreateWindow(title_,
 		SDL_WINDOWPOS_UNDEFINED,
