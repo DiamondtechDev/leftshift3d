@@ -16,6 +16,7 @@ void InputManager::update()
 	{
 		oldKeyMap_[it.first] = it.second;
 	}
+	oldMouseCoords_ = mouseCoords_;
 }
 
 void InputManager::pressKey(unsigned int keyID)

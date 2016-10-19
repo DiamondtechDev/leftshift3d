@@ -5,6 +5,7 @@
 #include <string>
 #include "GLSLShader.h"
 #include "FPSLimiter.h"
+#include "Camera.h"
 
 enum GameState {
 	PLAYING,
@@ -20,6 +21,7 @@ class MainGame
 		void run();
 	private:
 		void initSystems();
+		void initGame();
 		void gameLoop();
 		void renderGame();
 		void handleEvents();
@@ -39,4 +41,11 @@ class MainGame
 
 		float maxFps_ = 60.0f;
 		float fps_ = 0;
+
+		GLuint VertexArrayID;
+		GLuint vertexbuffer;
+		GLuint elementbuffer;
+		GLSLShader myShader;
+
+		Camera camera_;
 };

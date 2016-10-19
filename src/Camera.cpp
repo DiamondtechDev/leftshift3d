@@ -32,6 +32,7 @@ glm::mat4 Camera::GetViewMatrix()
 void Camera::ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime)
 {
 	GLfloat velocity = movementSpeed_ * deltaTime;
+
 	if (direction == FORWARD)
 		position_ += front_ * velocity;
 	if (direction == BACKWARD)
@@ -50,6 +51,8 @@ void Camera::ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset, GLboolean co
 	yaw_   += xoffset;
 	pitch_ += yoffset;
 
+	//std::cout << yaw_ << std::endl;
+	//std::cout << pitch_ << std::endl;
 	// Make sure that when pitch is out of bounds, screen doesn't get flipped
 	if (constrainPitch)
 	{

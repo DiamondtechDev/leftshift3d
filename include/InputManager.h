@@ -20,9 +20,11 @@ class InputManager
 		bool isKeyPressed(unsigned int keyID);
 
 		glm::vec2 getMouseCoords() const { return mouseCoords_; }
+		glm::vec2 getOldMouseCoords() const { return oldMouseCoords_; }
 	private:
 		bool wasKeyDown(unsigned int keyID);
 		std::unordered_map<unsigned int, bool> keyMap_;
 		std::unordered_map<unsigned int, bool> oldKeyMap_;
 		glm::vec2 mouseCoords_;
+		glm::vec2 oldMouseCoords_;
 };
