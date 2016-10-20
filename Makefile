@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall
+CFLAGS=-Wall -std=gnu++0x
 INCLUDES=-Iinclude/
 LIBS=-lSDL2 -lGL -lGLEW -lSOIL
 SRCS=Camera.cpp GLSLShader.cpp MainGame.cpp Errors.cpp InputManager.cpp Texture.cpp FPSLimiter.cpp main.cpp VertexBuffers.cpp

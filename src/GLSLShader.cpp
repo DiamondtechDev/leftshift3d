@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 GLSLShader::GLSLShader() 
 {
@@ -77,12 +78,12 @@ void GLSLShader::compileShaders(const std::string& vertexShaderFilePath, const s
 	compileShader(fragmentShaderFilePath, fragmentShaderID_);
 }
 
-GLint GLSLShader::getUniformLocation(const std::string& uniformName) 
+GLuint GLSLShader::getUniformLocation(const std::string& uniformName) 
 {
-	GLint location = glGetUniformLocation(programID_, uniformName.c_str());
+	GLuint location = glGetUniformLocation(programID_, uniformName.c_str());
 	if(location == GL_INVALID_INDEX)
 	{
-		fatalError("Unform '"+ uniformName +"' not found in shader!");
+		fatalError("Uniform '"+ uniformName +"' not found in shader!");
 	}
 	return location;
 }
