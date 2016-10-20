@@ -5,13 +5,17 @@ LIBS=-lSDL2 -lGL -lGLEW
 SRCS=Camera.cpp GLSLShader.cpp MainGame.cpp Errors.cpp InputManager.cpp Texture.cpp FPSLimiter.cpp main.cpp VertexBuffers.cpp
 OBJS=$(join $(addsuffix objs/, $(dir $(SRCS))), $(notdir $(SRCS:.cpp=.o)))
 DEPOBJS=objs/libsoil2.a
-MAIN=game
+MAIN=ls3d
 MAKEFILE_PATH = $(abspath $(lastword $(MAKEFILE_LIST)))
 
-all: clean $(MAIN)
+all: clean deps engine
 
-$(MAIN): $(DEPOBJS) $(OBJS)
+$(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o objs/$(MAIN) $(OBJS) $(DEPOBJS) $(LIBS)
+
+engine: $(MAIN)
+
+deps: $(DEPOBJS)
 
 objs/%.o: src/%.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
