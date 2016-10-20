@@ -3,7 +3,7 @@
 #include <string>
 #include <GL/glew.h>
 
-#include <SOIL/SOIL.h>
+#include "SOIL2.h"
 
 enum TextureFiltering
 {
