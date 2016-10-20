@@ -1,8 +1,9 @@
 #pragma once
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
-#include "InputManager.h"
 #include <string>
+#include "InputManager.h"
+#include "Texture.h"
 #include "GLSLShader.h"
 #include "FPSLimiter.h"
 #include "Camera.h"
@@ -48,4 +49,7 @@ class MainGame
 		GLSLShader myShader;
 
 		Camera camera_;
+		Texture tex1;
+
+		bool showMouse_ = false;
 };

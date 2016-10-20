@@ -51,8 +51,6 @@ void Camera::ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset, GLboolean co
 	yaw_   += xoffset;
 	pitch_ += yoffset;
 
-	//std::cout << yaw_ << std::endl;
-	//std::cout << pitch_ << std::endl;
 	// Make sure that when pitch is out of bounds, screen doesn't get flipped
 	if (constrainPitch)
 	{
@@ -68,10 +66,12 @@ void Camera::ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset, GLboolean co
 
 void Camera::ProcessMouseScroll(GLfloat yoffset)
 {
-	if (zoom_ >= 1.0f && zoom_ <= 45.0f)
+	if (zoom_ >= 44.0f && zoom_ <= 45.0f)
 		zoom_ -= yoffset;
-	if (zoom_ <= 1.0f)
-		zoom_ = 1.0f;
+	
+	if (zoom_ <= 44.0f)
+		zoom_ = 44.0f;
+
 	if (zoom_ >= 45.0f)
 		zoom_ = 45.0f;
 }

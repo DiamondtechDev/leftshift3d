@@ -19,7 +19,7 @@ bool Texture::loadTexture2D(const char* filePath, GLenum format, bool generateMi
 
 	if(format == GL_RGBA) {
 		image = SOIL_load_image(filePath, &width_, &height_, 0, SOIL_LOAD_RGBA);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_, height_, 0, format, GL_UNSIGNED_BYTE, image);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_, height_, 0, format, GL_UNSIGNED_BYTE, image);
 	} else if(format == GL_RGB) {
 		image = SOIL_load_image(filePath, &width_, &height_, 0, SOIL_LOAD_RGB);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_, height_, 0, format, GL_UNSIGNED_BYTE, image);
@@ -41,6 +41,8 @@ bool Texture::loadTexture2D(const char* filePath, GLenum format, bool generateMi
 	SOIL_free_image_data(image);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return true;
 }
 
 void Texture::bindTexture(GLint textureUnit) {

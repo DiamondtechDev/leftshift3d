@@ -16,7 +16,13 @@ void InputManager::update()
 	{
 		oldKeyMap_[it.first] = it.second;
 	}
+
+	// Keep old mouse coordinates
 	oldMouseCoords_ = mouseCoords_;
+
+	// Reset the mouse wheel scroll, as we will ever only need it once.
+	y_mwheel_ = 0;
+	x_mwheel_ = 0;
 }
 
 void InputManager::pressKey(unsigned int keyID)
@@ -58,4 +64,10 @@ bool InputManager::isKeyPressed(unsigned int keyID)
 	if(isKeyDown(keyID) == true && wasKeyDown(keyID) == false)
 		return true;
 	return false;
+}
+
+void InputManager::setMouseWheel(int vert, int horiz)
+{
+	y_mwheel_ = vert;
+	x_mwheel_ = horiz;
 }
