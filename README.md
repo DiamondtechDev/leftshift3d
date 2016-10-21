@@ -11,4 +11,4 @@ Upcoming 3D game engine made in c++
 
 ### Build
 
-To build the engine, run `make`. A binary named `game` will appear in `objs/`
+To build the engine, run `make`. A binary named `ls3d` will appear in `objs/`
