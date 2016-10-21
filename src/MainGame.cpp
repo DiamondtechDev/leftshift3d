@@ -71,6 +71,12 @@ void MainGame::initGame() {
 	glEnable(GL_DEPTH_TEST);
 
 	model = new AssimpModel("resources/cube.obj");
+	light = new LightBasic(&myShader);
+
+	sun->color = glm::vec3(1.0f, 1.0f, 1.0f);
+	sun->ambientIntensity = 0.1f;
+	sun->direction = glm::vec3(-1.0f, -1.0f, 0.0f);
+	sun->diffuseIntensity = 0.8f;
 }
 
 void MainGame::gameLoop()
@@ -183,17 +189,22 @@ void MainGame::renderGame()
 	GLuint loc_project = myShader.getUniformLocation("mat_project");
 	GLuint loc_view = myShader.getUniformLocation("mat_view");
 	GLuint loc_model = myShader.getUniformLocation("mat_model");
-
+	GLuint loc_camPos = myShader.getUniformLocation("cameraPosition");
 	GLuint loc_tex = myShader.getUniformLocation("ourTexture");
 
 	glm::mat4 mat_model = glm::mat4(1.0f);
 	glm::mat4 projection = glm::perspective(camera_.getFOV(), (GLfloat)windowWidth_/(GLfloat)windowHeight_, 0.1f, 100.0f); 
-	glm::mat4 view = camera_.GetViewMatrix();
+	glm::vec3 camPos = camera_.getPosition();
 
 	glUniformMatrix4fv(loc_project, 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(loc_view, 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(loc_view, 1, GL_FALSE, glm::value_ptr(camera_.getViewMatrix()));
 	glUniformMatrix4fv(loc_model, 1, GL_FALSE, glm::value_ptr(mat_model));
 
+	glUniform3f(loc_camPos, camPos.x, camPos.y, camPos.z);
+
+	light->setDirectionalLight(*sun);
+	light->setSpecularIntensity(2.0f);
+	light->setSpecularPower(1.0f);
 	model->render();
 	glUniform1i(loc_tex, 1);
 

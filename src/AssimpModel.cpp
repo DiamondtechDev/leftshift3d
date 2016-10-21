@@ -49,11 +49,13 @@ AssimpModel::~AssimpModel(void)
 	for(uint i = 0; i < meshes_.size(); i++) {
 		delete meshes_.at(i);
 	}
+
 	for(uint tex = 0; tex < textures_.size(); ++tex) {
 		if(textures_.at(tex) != NULL) {
 			delete textures_.at(tex);
 		}
 	}
+	
 	meshes_.clear();
 }
 

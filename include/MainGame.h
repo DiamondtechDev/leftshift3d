@@ -8,6 +8,7 @@
 #include "FPSLimiter.h"
 #include "Camera.h"
 #include "AssimpModel.h"
+#include "LightBasic.h"
 
 enum GameState {
 	PLAYING,
@@ -47,6 +48,8 @@ class MainGame
 		GLSLShader myShader;
 
 		Camera camera_;
+		LightBasic* light;
+		DirectionalLight* sun = new DirectionalLight();
 		AssimpModel* model;
 
 		bool showMouse_ = false;
