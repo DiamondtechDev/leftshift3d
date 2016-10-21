@@ -2,7 +2,7 @@
 #include "Errors.h"
 #include <iostream>
 
-MainGame::MainGame() : camera_(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f)
+MainGame::MainGame() : camera_(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f)
 {
 
 }
@@ -61,57 +61,16 @@ void MainGame::initSystems()
 void MainGame::initGame() {
 	myShader.compileShaders("shaders/generic.vert", "shaders/generic.frag");
 	myShader.addAttribute("position");
-	myShader.addAttribute("color");
 	myShader.addAttribute("texCoord");
+	myShader.addAttribute("normals");
 	myShader.linkShaders();
-
-	GLfloat vertices[] = {
-		// Positions          // Colors           // Texture Coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // Top Right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // Bottom Right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // Bottom Left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // Top Left 
-	};
-
-	GLuint indices[] = {  // Note that we start from 0!
-		0, 1, 3,  // First Triangle
-		1, 2, 3   // Second Triangle
-	};
-
-	glGenVertexArrays(1, &VertexArrayID);
-	glGenBuffers(1, &vertexbuffer);
-	glGenBuffers(1, &elementbuffer);
-
-	glBindVertexArray(VertexArrayID);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
-
-    glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
 
 	SDL_ShowCursor(SDL_DISABLE);
 
-	glEnable( GL_MULTISAMPLE );
+	glEnable(GL_MULTISAMPLE);
+	glEnable(GL_DEPTH_TEST);
 
-	tex1.loadTexture2D("resources/texture/diamondlogo.png", GL_RGBA, GL_TRUE);
-	tex1.setSamplerParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-	tex1.setSamplerParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
-	tex1.setFiltering(TextureFiltering::TEXTURE_FILTER_MAG_BILINEAR, TextureFiltering::TEXTURE_FILTER_MIN_BILINEAR);
+	model = new AssimpModel("resources/cube.obj");
 }
 
 void MainGame::gameLoop()
@@ -219,7 +178,6 @@ void MainGame::handleEvents()
 
 void MainGame::renderGame()
 {
-	glBindVertexArray(VertexArrayID);
 	myShader.start();
 
 	GLuint loc_project = myShader.getUniformLocation("mat_project");
@@ -228,19 +186,16 @@ void MainGame::renderGame()
 
 	GLuint loc_tex = myShader.getUniformLocation("ourTexture");
 
-	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 mat_model = glm::mat4(1.0f);
 	glm::mat4 projection = glm::perspective(camera_.getFOV(), (GLfloat)windowWidth_/(GLfloat)windowHeight_, 0.1f, 100.0f); 
 	glm::mat4 view = camera_.GetViewMatrix();
 
-	tex1.bindTexture(0);
-	glUniform1i(loc_tex, 0);
-
 	glUniformMatrix4fv(loc_project, 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(loc_view, 1, GL_FALSE, glm::value_ptr(view));
-	glUniformMatrix4fv(loc_model, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(loc_model, 1, GL_FALSE, glm::value_ptr(mat_model));
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	model->render();
+	glUniform1i(loc_tex, 1);
 
 	myShader.stop();
-	glBindVertexArray(0);
 }

@@ -7,6 +7,7 @@
 #include "GLSLShader.h"
 #include "FPSLimiter.h"
 #include "Camera.h"
+#include "AssimpModel.h"
 
 enum GameState {
 	PLAYING,
@@ -43,13 +44,10 @@ class MainGame
 		float maxFps_ = 60.0f;
 		float fps_ = 0;
 
-		GLuint VertexArrayID;
-		GLuint vertexbuffer;
-		GLuint elementbuffer;
 		GLSLShader myShader;
 
 		Camera camera_;
-		Texture tex1;
+		AssimpModel* model;
 
 		bool showMouse_ = false;
 };

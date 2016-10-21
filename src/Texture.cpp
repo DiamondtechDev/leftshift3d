@@ -2,9 +2,8 @@
 #include "Errors.h"
 
 #include <iostream>
-#include <string>
 
-Texture::Texture() 
+Texture::Texture()
 {
 
 }

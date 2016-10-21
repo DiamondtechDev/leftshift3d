@@ -7,6 +7,7 @@ Upcoming 3D game engine made in c++
 * [GLEW](http://glew.sourceforge.net/) - The OpenGL Extension Wrangler Library
 * [GLM](http://glm.g-truc.net/0.9.7/index.html) - OpenGL Mathematics
 * [SOIL](http://lonesock.net/soil.html) - Simple OpenGL Image Library
+* [ASSIMP](http://assimp.org/) - Open Asset Import Library
 
 ### Build
 

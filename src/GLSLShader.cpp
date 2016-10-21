@@ -134,17 +134,17 @@ void GLSLShader::addAttribute(const std::string& attribName)
 void GLSLShader::start() 
 {
 	glUseProgram(programID_);
-	for(int i = 0; i < numAttributes_; i++)
+	/*for(int i = 0; i < numAttributes_; i++)
 	{
 		glEnableVertexAttribArray(i);
-	}
+	}*/
 }
 
 void GLSLShader::stop() 
 {
-	for(int i = 0; i < numAttributes_; i++)
+	/*for(int i = 0; i < numAttributes_; i++)
 	{
 		glDisableVertexAttribArray(i);
-	}
+	}*/
 	glUseProgram(0);
 }

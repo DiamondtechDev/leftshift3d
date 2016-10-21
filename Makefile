@@ -1,12 +1,11 @@
 CC=g++
 CFLAGS=-Wall -std=gnu++0x
 INCLUDES=-Iinclude/
-LIBS=-lSDL2 -lGL -lGLEW
-SRCS=Camera.cpp GLSLShader.cpp MainGame.cpp Errors.cpp InputManager.cpp Texture.cpp FPSLimiter.cpp main.cpp VertexBuffers.cpp
+LIBS=-lSDL2 -lGL -lGLEW -lassimp
+SRCS=Camera.cpp GLSLShader.cpp MainGame.cpp Errors.cpp InputManager.cpp Texture.cpp FPSLimiter.cpp main.cpp VertexBuffers.cpp AssimpModel.cpp AssimpMesh.cpp
 OBJS=$(join $(addsuffix objs/, $(dir $(SRCS))), $(notdir $(SRCS:.cpp=.o)))
 DEPOBJS=objs/libsoil2.a
 MAIN=ls3d
-MAKEFILE_PATH = $(abspath $(lastword $(MAKEFILE_LIST)))
 
 all: clean deps engine
 

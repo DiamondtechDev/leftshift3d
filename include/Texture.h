@@ -27,6 +27,8 @@ public:
 
 	void setSamplerParameter(GLenum parameter, GLenum value);
 	void setFiltering(GLint magnification, GLint minification);
+
+	const char* getPath() const { return path_; }
 private:
 	int width_, height_;
 	GLuint texture_, sampler_;
