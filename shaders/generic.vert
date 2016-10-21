@@ -7,6 +7,7 @@ in vec3 normals;
 out vec2 outTexCoord;
 out vec3 outNormal;
 out vec3 toCameraVector;
+out vec3 positionVector;
 
 uniform vec3 cameraPosition;
 
@@ -19,5 +20,6 @@ void main() {
 	
 	outTexCoord = vec2(texCoord.x, 1.0 - texCoord.y);
 	outNormal = (mat_model * vec4(normals, 0.0)).xyz;
-	toCameraVector = normalize(cameraPosition - position);
+	positionVector = (mat_model * vec4(position, 1.0)).xyz;
+	toCameraVector = cameraPosition - position;
 }

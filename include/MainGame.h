@@ -50,6 +50,7 @@ class MainGame
 		Camera camera_;
 		LightBasic* light;
 		DirectionalLight* sun = new DirectionalLight();
+		PointLight* test = new PointLight();
 		AssimpModel* model;
 
 		bool showMouse_ = false;

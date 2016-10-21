@@ -9,7 +9,10 @@ MainGame::MainGame() : camera_(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f
 
 MainGame::~MainGame()
 {
-
+	delete sun;
+	delete model;
+	delete light;
+	delete test;
 }
 
 void MainGame::run()
@@ -77,6 +80,12 @@ void MainGame::initGame() {
 	sun->ambientIntensity = 0.1f;
 	sun->direction = glm::vec3(-1.0f, -1.0f, 0.0f);
 	sun->diffuseIntensity = 0.8f;
+
+	test->color = glm::vec3(1.0f, 0.0f, 0.0f);
+	test->ambientIntensity = 0.1f;
+	test->diffuseIntensity = 0.8f;
+	test->attenuation.linear = 2.0f;
+	test->position = glm::vec3(0.0f, 0.0f, 2.0f);
 }
 
 void MainGame::gameLoop()
@@ -193,6 +202,7 @@ void MainGame::renderGame()
 	GLuint loc_tex = myShader.getUniformLocation("ourTexture");
 
 	glm::mat4 mat_model = glm::mat4(1.0f);
+	mat_model = glm::translate(mat_model, glm::vec3(0.1f, 0.2f, 0.1f));
 	glm::mat4 projection = glm::perspective(camera_.getFOV(), (GLfloat)windowWidth_/(GLfloat)windowHeight_, 0.1f, 100.0f); 
 	glm::vec3 camPos = camera_.getPosition();
 
@@ -203,10 +213,12 @@ void MainGame::renderGame()
 	glUniform3f(loc_camPos, camPos.x, camPos.y, camPos.z);
 
 	light->setDirectionalLight(*sun);
-	light->setSpecularIntensity(2.0f);
+	light->setSpecularIntensity(0.6f);
 	light->setSpecularPower(1.0f);
-	model->render();
+	light->setPointLights(1, test);
 	glUniform1i(loc_tex, 1);
+
+	model->render();
 
 	myShader.stop();
 }
