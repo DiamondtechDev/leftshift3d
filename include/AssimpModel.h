@@ -3,8 +3,7 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>
 
-#include <GL/glew.h>
-#include <vector>
+#include "LSUtil.h"
 
 #include "AssimpMesh.h"
 #include "Texture.h"

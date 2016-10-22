@@ -1,5 +1,4 @@
 #include "Lighting.h"
-#include <iostream>
 
 Lighting::Lighting(GLSLShader* shader) : ShaderSystem(shader)
 {

@@ -1,9 +1,6 @@
 #include "GLSLShader.h"
-#include "Errors.h"
 
 #include <fstream>
-#include <vector>
-#include <iostream>
 
 GLSLShader::GLSLShader() 
 {

@@ -1,7 +1,4 @@
 #include "Texture.h"
-#include "Errors.h"
-
-#include <iostream>
 
 Texture::Texture()
 {

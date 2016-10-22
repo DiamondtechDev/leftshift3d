@@ -1,5 +1,4 @@
 #include "AssimpMesh.h"
-#include <iostream>
 
 AssimpMesh::AssimpMesh(aiMesh *mesh) {
 	glGenVertexArrays(1, &vao);

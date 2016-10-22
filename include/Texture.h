@@ -1,8 +1,5 @@
 #pragma once
-
-#include <string>
-#include <GL/glew.h>
-
+#include "LSUtil.h"
 #include "SOIL2.h"
 
 enum TextureFiltering

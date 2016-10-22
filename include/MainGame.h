@@ -1,7 +1,5 @@
 #pragma once
-#include <GL/glew.h>
-#include <SDL2/SDL.h>
-#include <string>
+#include "LSUtil.h"
 #include "InputManager.h"
 #include "Texture.h"
 #include "GLSLShader.h"
@@ -56,8 +54,8 @@ class MainGame
 		Skybox* skybox;
 
 		Lighting* lighting;
-		DirectionalLight* sun = new DirectionalLight();
-		PointLight* test;
+		DirectionalLight* sun;
+		PointLight* pointLight;
 		AssimpModel* model;
 
 		bool showMouse_ = false;

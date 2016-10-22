@@ -1,5 +1,4 @@
 #include "AssimpModel.h"
-#include <iostream>
 
 /**
 *	AssimpModel constructor, loads the specified filename if supported by Assimp

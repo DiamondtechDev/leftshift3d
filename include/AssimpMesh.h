@@ -3,12 +3,7 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <GL/glew.h>
-#include <vector>
+#include "LSUtil.h"
 
 #include "Texture.h"
 #include "GLSLShader.h"
