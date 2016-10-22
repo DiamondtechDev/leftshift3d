@@ -17,6 +17,13 @@ struct BaseLight
 		ambientIntensity = 0.0f;
 		diffuseIntensity = 0.0f;
 	}
+
+	BaseLight(glm::vec3 c, float ai, float di)
+	{
+		color = c;
+		ambientIntensity = ai;
+		diffuseIntensity = di;
+	}
 };
 
 struct DirectionalLight : public BaseLight
@@ -26,6 +33,11 @@ struct DirectionalLight : public BaseLight
 	DirectionalLight()
 	{
 		direction = glm::vec3(0.0f, 0.0f, 0.0f);
+	}
+
+	DirectionalLight(glm::vec3 c, float ai, float di, glm::vec3 dir) : BaseLight(c, ai, di)
+	{
+		direction = dir;
 	}
 };
 
@@ -43,7 +55,15 @@ struct PointLight : public BaseLight
 	PointLight()
 	{
 		position = glm::vec3(0.0f, 0.0f, 0.0f);
-		attenuation.constant = 0.0f;
+		attenuation.constant = 1.0f;
+		attenuation.linear = 0.0f;
+		attenuation.exp = 0.0f;
+	}
+
+	PointLight(glm::vec3 c, float ai, float di, glm::vec3 pos) : BaseLight(c, ai, di)
+	{
+		position = pos;
+		attenuation.constant = 1.0f;
 		attenuation.linear = 0.0f;
 		attenuation.exp = 0.0f;
 	}
@@ -58,6 +78,12 @@ struct SpotLight : public PointLight
 	{
 		direction = glm::vec3(0.0f, 0.0f, 0.0f);
 		cutoff = 0.0f;
+	}
+
+	SpotLight(glm::vec3 c, float ai, float di, glm::vec3 pos, glm::vec3 dir, float cut) : PointLight(c, ai, di, pos)
+	{
+		direction = dir;
+		cutoff = cut;
 	}
 };
 

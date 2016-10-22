@@ -16,10 +16,14 @@ uniform mat4 mat_model;
 uniform mat4 mat_view;
 
 void main() {
-	gl_Position = mat_project * mat_view * mat_model * vec4(position, 1.0);
+	vec4 worldPosition = mat_model * vec4(position, 1.0);
+	gl_Position = mat_project * mat_view * worldPosition;
 	
 	outTexCoord = texCoord;
+
 	outNormal = (mat_model * vec4(normals, 0.0)).xyz;
-	positionVector = (mat_model * vec4(position, 1.0)).xyz;
-	toCameraVector = cameraPosition - position;
+	
+	positionVector = worldPosition.xyz;
+
+	toCameraVector = (inverse(mat_view) * vec4(0.0,0.0,0.0,1.0)).xyz;
 }

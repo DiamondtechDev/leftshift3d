@@ -66,7 +66,7 @@ vec4 CalcLightInternal(BaseLight light, vec3 lightDirection, vec3 normal)
 		diffuseColor = vec4(light.color * light.diffuseIntensity * diffuseFactor, 1.0);
 
 		vec3 lightReflect = normalize(reflect(lightDirection, normal));
-		float specularFactor = dot(toCameraVector, lightReflect);
+		float specularFactor = dot(lightReflect, toCameraVector);
 		if (specularFactor > 0) {
 			specularFactor = pow(specularFactor, specularPower);
 			specularColor = vec4(light.color * specularIntensity * specularFactor, 1.0);

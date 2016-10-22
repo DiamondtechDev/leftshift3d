@@ -57,7 +57,7 @@ class MainGame
 
 		Lighting* lighting;
 		DirectionalLight* sun = new DirectionalLight();
-		PointLight* test = new PointLight();
+		PointLight* test;
 		AssimpModel* model;
 
 		bool showMouse_ = false;

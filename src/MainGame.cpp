@@ -11,10 +11,8 @@ MainGame::~MainGame()
 {
 	delete sun;
 	delete model;
-	delete lighting;
 	delete test;
 	delete skybox;
-	delete skyboxRenderer;
 }
 
 void MainGame::run()
@@ -88,11 +86,8 @@ void MainGame::initGame() {
 	sun->direction = glm::vec3(-1.0f, -1.0f, 0.0f);
 	sun->diffuseIntensity = 0.8f;
 
-	test->color = glm::vec3(1.0f, 0.0f, 0.0f);
-	test->ambientIntensity = 0.1f;
-	test->diffuseIntensity = 0.8f;
+	test = new PointLight(glm::vec3(1.0f, 0.0f, 0.0f), 0.1f, 0.8f, glm::vec3(0.0f, 0.0f, 2.0f));
 	test->attenuation.linear = 2.0f;
-	test->position = glm::vec3(0.0f, 0.0f, 2.0f);
 
 	skyboxRenderer = new SkyboxRenderer(&skyboxShader);
 	skyboxRenderer->init();
@@ -218,7 +213,6 @@ void MainGame::renderGame()
 	GLuint loc_project = myShader.getUniformLocation("mat_project");
 	GLuint loc_view = myShader.getUniformLocation("mat_view");
 	GLuint loc_model = myShader.getUniformLocation("mat_model");
-	GLuint loc_camPos = myShader.getUniformLocation("cameraPosition");
 	GLuint loc_tex = myShader.getUniformLocation("ourTexture");
 
 	glm::mat4 mat_model = glm::mat4(1.0f);
@@ -229,10 +223,9 @@ void MainGame::renderGame()
 	glUniformMatrix4fv(loc_view, 1, GL_FALSE, glm::value_ptr(camera_.getViewMatrix()));
 	glUniformMatrix4fv(loc_model, 1, GL_FALSE, glm::value_ptr(mat_model));
 
-	glUniform3f(loc_camPos, camPos.x, camPos.y, camPos.z);
 
 	lighting->setDirectionalLight(*sun);
-	lighting->setSpecularIntensity(0.6f);
+	lighting->setSpecularIntensity(0.2f);
 	lighting->setSpecularPower(1.0f);
 	lighting->setPointLights(1, test);
 	glUniform1i(loc_tex, 1);

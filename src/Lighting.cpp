@@ -28,7 +28,7 @@ void Lighting::init()
 	/* Point lights */
 	numPointLightsLocation_ = shader_.getUniformLocation("numPointLights");
 
-	for(uint i; i < MAX_POINT_LIGHTS; i++) {
+	for(uint i = 0; i < MAX_POINT_LIGHTS; i++) {
 		pointLightsLocation_[i].color = shader_.getUniformLocation(std::string("pointLights[")+
 			std::to_string(i)+"].base.color");
 		pointLightsLocation_[i].ambientIntensity = shader_.getUniformLocation(std::string("pointLights[")+
@@ -48,25 +48,25 @@ void Lighting::init()
 	/* Spot lights */
 	numSpotLightsLocation_ = shader_.getUniformLocation("numSpotLights");
 
-	for(uint i; i < MAX_POINT_LIGHTS; i++) {
+	for(uint i = 0; i < MAX_SPOT_LIGHTS; i++) {
 		spotLightsLocation_[i].color = shader_.getUniformLocation(std::string("spotLights[")+
-			std::to_string(i)+"].base.color");
+			std::to_string(i)+"].base.base.color");
 		spotLightsLocation_[i].direction = shader_.getUniformLocation(std::string("spotLights[")+
 			std::to_string(i)+"].direction");
 		spotLightsLocation_[i].cutoff = shader_.getUniformLocation(std::string("spotLights[")+
 			std::to_string(i)+"].cutoff");
 		spotLightsLocation_[i].ambientIntensity = shader_.getUniformLocation(std::string("spotLights[")+
-			std::to_string(i)+"].base.ambientIntensity");
+			std::to_string(i)+"].base.base.ambientIntensity");
 		spotLightsLocation_[i].diffuseIntensity = shader_.getUniformLocation(std::string("spotLights[")+
-			std::to_string(i)+"].base.diffuseIntensity");
+			std::to_string(i)+"].base.base.diffuseIntensity");
 		spotLightsLocation_[i].position = shader_.getUniformLocation(std::string("spotLights[")+
-			std::to_string(i)+"].position");
+			std::to_string(i)+"].base.position");
 		spotLightsLocation_[i].atten.linear = shader_.getUniformLocation(std::string("spotLights[")+
-			std::to_string(i)+"].atten.linear");
+			std::to_string(i)+"].base.atten.linear");
 		spotLightsLocation_[i].atten.constant = shader_.getUniformLocation(std::string("spotLights[")+
-			std::to_string(i)+"].atten.constant");
+			std::to_string(i)+"].base.atten.constant");
 		spotLightsLocation_[i].atten.expn = shader_.getUniformLocation(std::string("spotLights[")+
-			std::to_string(i)+"].atten.expn");
+			std::to_string(i)+"].base.atten.expn");
 	}
 
 	shader_.stop();
