@@ -1,7 +1,17 @@
-#include "LightBasic.h"
+#include "Lighting.h"
 #include <iostream>
 
-LightBasic::LightBasic(GLSLShader* shader) : shader_(*shader)
+Lighting::Lighting(GLSLShader* shader) : ShaderSystem(shader)
+{
+
+}
+
+Lighting::~Lighting()
+{
+
+}
+
+void Lighting::init()
 {
 	shader_.start();
 
@@ -62,12 +72,7 @@ LightBasic::LightBasic(GLSLShader* shader) : shader_(*shader)
 	shader_.stop();
 }
 
-LightBasic::~LightBasic()
-{
-
-}
-
-void LightBasic::setDirectionalLight(const DirectionalLight& light) 
+void Lighting::setDirectionalLight(const DirectionalLight& light) 
 {
 	glUniform3f(colorLocation_, light.color.x, light.color.y, light.color.z);
 	glUniform1f(ambientIntensityLocation_, light.ambientIntensity);
@@ -78,7 +83,7 @@ void LightBasic::setDirectionalLight(const DirectionalLight& light)
 	glUniform1f(diffuseIntensityLocation_, light.diffuseIntensity);
 }
 
-void LightBasic::setPointLights(unsigned int numLights, const PointLight* pLights)
+void Lighting::setPointLights(unsigned int numLights, const PointLight* pLights)
 {
 	glUniform1i(numPointLightsLocation_, numLights);
 
@@ -93,7 +98,7 @@ void LightBasic::setPointLights(unsigned int numLights, const PointLight* pLight
 	}
 }
 
-void LightBasic::setSpotLights(unsigned int numLights, const SpotLight* pLights)
+void Lighting::setSpotLights(unsigned int numLights, const SpotLight* pLights)
 {
 	glUniform1i(numSpotLightsLocation_, numLights);
 
@@ -110,11 +115,11 @@ void LightBasic::setSpotLights(unsigned int numLights, const SpotLight* pLights)
 	}
 }
 
-void LightBasic::setSpecularIntensity(float intensity)
+void Lighting::setSpecularIntensity(float intensity)
 {
 	glUniform1f(specularIntensityLocation_, intensity);
 }
 
-void LightBasic::setSpecularPower(float power){
+void Lighting::setSpecularPower(float power){
 	glUniform1f(specularPowerLocation_, power);
 }

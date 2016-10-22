@@ -18,7 +18,7 @@ uniform mat4 mat_view;
 void main() {
 	gl_Position = mat_project * mat_view * mat_model * vec4(position, 1.0);
 	
-	outTexCoord = vec2(texCoord.x, 1.0 - texCoord.y);
+	outTexCoord = texCoord;
 	outNormal = (mat_model * vec4(normals, 0.0)).xyz;
 	positionVector = (mat_model * vec4(position, 1.0)).xyz;
 	toCameraVector = cameraPosition - position;

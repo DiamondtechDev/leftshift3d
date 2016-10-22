@@ -1,12 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "GLSLShader.h"
+#include "ShaderSystem.h"
 
 const int MAX_POINT_LIGHTS = 4;
 const int MAX_SPOT_LIGHTS = 4;
@@ -67,11 +61,11 @@ struct SpotLight : public PointLight
 	}
 };
 
-class LightBasic
+class Lighting : public ShaderSystem
 {
 	public:
-		LightBasic(GLSLShader* shader);
-		~LightBasic();
+		Lighting(GLSLShader* shader);
+		~Lighting();
 
 		void setDirectionalLight(const DirectionalLight& light);
 		void setPointLights(unsigned int numLights, const PointLight* pLights);
@@ -79,9 +73,10 @@ class LightBasic
 
 		void setSpecularIntensity(float intensity);
 		void setSpecularPower(float power);
-	private:
-		GLSLShader& shader_;
 
+		virtual void init();
+
+	private:
 		GLuint colorLocation_;
 		GLuint ambientIntensityLocation_;
 		GLuint directionLocation_;

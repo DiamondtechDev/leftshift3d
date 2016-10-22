@@ -11,8 +11,10 @@ MainGame::~MainGame()
 {
 	delete sun;
 	delete model;
-	delete light;
+	delete lighting;
 	delete test;
+	delete skybox;
+	delete skyboxRenderer;
 }
 
 void MainGame::run()
@@ -68,13 +70,18 @@ void MainGame::initGame() {
 	myShader.addAttribute("normals");
 	myShader.linkShaders();
 
+	skyboxShader.compileShaders("shaders/skybox.vert", "shaders/skybox.frag");
+	skyboxShader.addAttribute("position");
+	skyboxShader.linkShaders();
+
 	SDL_ShowCursor(SDL_DISABLE);
 
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
 
 	model = new AssimpModel("resources/cube.obj");
-	light = new LightBasic(&myShader);
+	lighting = new Lighting(&myShader);
+	lighting->init();
 
 	sun->color = glm::vec3(1.0f, 1.0f, 1.0f);
 	sun->ambientIntensity = 0.1f;
@@ -86,6 +93,17 @@ void MainGame::initGame() {
 	test->diffuseIntensity = 0.8f;
 	test->attenuation.linear = 2.0f;
 	test->position = glm::vec3(0.0f, 0.0f, 2.0f);
+
+	skyboxRenderer = new SkyboxRenderer(&skyboxShader);
+	skyboxRenderer->init();
+
+	skybox = new Skybox();
+	skybox->init("resources/sor_lake1", "lake1_lf.JPG",
+			"lake1_rt.JPG",
+			"lake1_up.JPG",
+			"lake1_dn.JPG",
+			"lake1_ft.JPG",
+			"lake1_bk.JPG");
 }
 
 void MainGame::gameLoop()
@@ -193,6 +211,8 @@ void MainGame::handleEvents()
 
 void MainGame::renderGame()
 {
+	glm::mat4 projection = glm::perspective(camera_.getFOV(), (GLfloat)windowWidth_/(GLfloat)windowHeight_, 0.1f, 100.0f);
+
 	myShader.start();
 
 	GLuint loc_project = myShader.getUniformLocation("mat_project");
@@ -203,7 +223,6 @@ void MainGame::renderGame()
 
 	glm::mat4 mat_model = glm::mat4(1.0f);
 	mat_model = glm::translate(mat_model, glm::vec3(0.1f, 0.2f, 0.1f));
-	glm::mat4 projection = glm::perspective(camera_.getFOV(), (GLfloat)windowWidth_/(GLfloat)windowHeight_, 0.1f, 100.0f); 
 	glm::vec3 camPos = camera_.getPosition();
 
 	glUniformMatrix4fv(loc_project, 1, GL_FALSE, glm::value_ptr(projection));
@@ -212,13 +231,16 @@ void MainGame::renderGame()
 
 	glUniform3f(loc_camPos, camPos.x, camPos.y, camPos.z);
 
-	light->setDirectionalLight(*sun);
-	light->setSpecularIntensity(0.6f);
-	light->setSpecularPower(1.0f);
-	light->setPointLights(1, test);
+	lighting->setDirectionalLight(*sun);
+	lighting->setSpecularIntensity(0.6f);
+	lighting->setSpecularPower(1.0f);
+	lighting->setPointLights(1, test);
 	glUniform1i(loc_tex, 1);
 
 	model->render();
 
 	myShader.stop();
+
+	skyboxShader.start();
+	skyboxRenderer->render(&projection, &camera_, skybox);
 }

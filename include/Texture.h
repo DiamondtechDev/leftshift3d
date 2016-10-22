@@ -20,8 +20,12 @@ class Texture
 {
 public:
 	Texture();
+	~Texture();
 
-	bool loadTexture2D(const char* filePath, GLenum format = GL_RGB, bool generateMipmaps = false);
+	bool loadTexture2D(const char* filePath);
+	bool loadCubeMapFromTexture(const std::string& directory, const std::string& posXFile, const std::string& negXFile, 
+		const std::string& posYFile, const std::string& negYFile, const std::string& posZFile, const std::string& negZFile);
+	bool loadCubeMapFromFile(const std::string& filePath);
 	void bindTexture(GLint textureUnit = 0);
 	void releaseTexture();
 
@@ -31,7 +35,8 @@ public:
 	const char* getPath() const { return path_; }
 private:
 	int width_, height_;
-	GLuint texture_, sampler_;
+	GLuint texture_, sampler_ = 0;
+	GLenum textureType_;
 
 	const char* path_;
 

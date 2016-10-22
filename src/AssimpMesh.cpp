@@ -1,4 +1,5 @@
 #include "AssimpMesh.h"
+#include <iostream>
 
 AssimpMesh::AssimpMesh(aiMesh *mesh) {
 	glGenVertexArrays(1, &vao);
@@ -20,7 +21,7 @@ AssimpMesh::AssimpMesh(aiMesh *mesh) {
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 		glEnableVertexAttribArray (0);
-
+		
 		delete[] vertices;
 	}
 
@@ -38,7 +39,6 @@ AssimpMesh::AssimpMesh(aiMesh *mesh) {
 
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 		glEnableVertexAttribArray (1);
-
 		delete[] texCoords;
 	}
 

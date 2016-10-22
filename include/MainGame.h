@@ -8,7 +8,9 @@
 #include "FPSLimiter.h"
 #include "Camera.h"
 #include "AssimpModel.h"
-#include "LightBasic.h"
+#include "Lighting.h"
+#include "SkyboxRenderer.h"
+#include "Skybox.h"
 
 enum GameState {
 	PLAYING,
@@ -46,9 +48,14 @@ class MainGame
 		float fps_ = 0;
 
 		GLSLShader myShader;
+		GLSLShader skyboxShader;
 
 		Camera camera_;
-		LightBasic* light;
+
+		SkyboxRenderer* skyboxRenderer;
+		Skybox* skybox;
+
+		Lighting* lighting;
 		DirectionalLight* sun = new DirectionalLight();
 		PointLight* test = new PointLight();
 		AssimpModel* model;

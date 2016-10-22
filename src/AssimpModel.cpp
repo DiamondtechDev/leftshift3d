@@ -30,7 +30,7 @@ AssimpModel::AssimpModel(const char *filename)
 					std::string fullPath = std::string("resources/") + pathname.data;
 					textures_[i] = new Texture();
 
-					if (!textures_[i]->loadTexture2D(fullPath.c_str(), GL_RGBA, GL_TRUE)) {
+					if (!textures_[i]->loadTexture2D(fullPath.c_str())) {
 						printf("Error loading texture '%s'\n", fullPath.c_str());
 						delete textures_[i];
 						textures_[i] = NULL;
