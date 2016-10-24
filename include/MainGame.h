@@ -9,6 +9,7 @@
 #include "Lighting.h"
 #include "SkyboxRenderer.h"
 #include "Skybox.h"
+#include "Entity.h"
 
 enum GameState {
 	PLAYING,
@@ -56,7 +57,8 @@ class MainGame
 		Lighting* lighting;
 		DirectionalLight* sun;
 		PointLight* pointLight;
-		AssimpModel* model;
+		AssimpModel* cube;
+		Entity* model;
 
 		bool showMouse_ = false;
 };

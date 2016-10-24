@@ -10,7 +10,6 @@ out vec3 toCameraVector;
 out vec3 positionVector;
 
 uniform vec3 cameraPosition;
-
 uniform mat4 mat_project;
 uniform mat4 mat_model;
 uniform mat4 mat_view;

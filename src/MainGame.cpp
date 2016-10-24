@@ -75,7 +75,8 @@ void MainGame::initGame() {
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
 
-	model = new AssimpModel("resources/cube.obj");
+	cube = new AssimpModel("resources/cube.obj");
+	model = new Entity(cube, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 45.0f, 0.0f), 1.0f);
 	lighting = new Lighting(&myShader);
 	lighting->init();
 
@@ -208,24 +209,29 @@ void MainGame::renderGame()
 	GLuint loc_view = myShader.getUniformLocation("mat_view");
 	GLuint loc_model = myShader.getUniformLocation("mat_model");
 	GLuint loc_tex = myShader.getUniformLocation("ourTexture");
-
-	glm::mat4 mat_model = glm::mat4(1.0f);
-	mat_model = glm::translate(mat_model, glm::vec3(0.1f, 0.2f, 0.1f));
-
+	
 	glUniformMatrix4fv(loc_project, 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(loc_view, 1, GL_FALSE, glm::value_ptr(camera_.getViewMatrix()));
-	glUniformMatrix4fv(loc_model, 1, GL_FALSE, glm::value_ptr(mat_model));
-
+	
 	lighting->setDirectionalLight(*sun);
 	lighting->setSpecularIntensity(0.2f);
 	lighting->setSpecularPower(1.0f);
 	lighting->setPointLights(1, pointLight);
 	glUniform1i(loc_tex, 1);
 
-	model->render();
+	glm::vec3 rotNow = model->getRotation();
+	if(rotNow.y >= 180.0f)
+		rotNow.y = 0;
+	else
+		rotNow.y += 0.05f;
+	model->setRotation(rotNow);
+
+	glUniformMatrix4fv(loc_model, 1, GL_FALSE, glm::value_ptr(model->getMatrix()));
+	model->getModel().render();
 
 	myShader.stop();
 
 	skyboxShader.start();
 	skyboxRenderer->render(&projection, &camera_, skybox);
+	skyboxShader.stop();
 }
